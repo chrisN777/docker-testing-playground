@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'It should have docker installed' do
-	describe package 'lxc-docker-1.1.1' do
+	describe package 'lxc-docker-1.2.0' do
 		it { should be_installed }
 	end
 
@@ -16,7 +16,7 @@ describe 'It should have docker installed' do
 	end
 
 	describe command 'docker -v' do
-		its(:stdout) { should match '^Docker version 1\.1\.1.*' }
+		its(:stdout) { should match '^Docker version 1\.2\.0.*' }
  	end
 end
 
@@ -46,7 +46,7 @@ describe 'Docker should have networking set up' do
 	 		with_table('nat').
 			with_chain('POSTROUTING') 
 		  }
-		  it { should have_rule('-A POSTROUTING -s 172.17.0.0/16 ! -d 172.17.0.0/16 -j MASQUERADE').
+		  it { should have_rule('-A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE').
 	 		with_table('nat').
 			with_chain('POSTROUTING') 
 		  }
